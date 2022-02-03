@@ -2,6 +2,9 @@ let parrots = ['bobrossparrot', 'explodyparrot', 'fiestaparrot', 'metalparrot', 
 
 parrots.sort(comparador);
 
+let move = 0;
+let numberOfCards = 0;
+
 function comparador() { 
 	return Math.random() - 0.5; 
 }
@@ -30,25 +33,52 @@ function assembleGame(numberOfCards){
                 <img src="midias/front.png" alt="Papagaio">
             </div>
             <div class = "front">
-                <img src="midias/${cards[i]}.gif" alt="Papagaio Metal">
+                <img src="midias/${cards[i]}.gif" alt="${cards[i]}">
             </div>
         </li>
         `
     }
+
 }
 
 function turnCard(card){
     card.classList.add('selecionada');
     turned = document.querySelectorAll('.selecionada');
-
+    move += 1;
     if (turned.length > 1){
+        if(turned[0].innerHTML === turned[1].innerHTML){
+            for (let i = 0; i < turned.length; i++){
+                turned[i].classList.add('correta');
+            }
+        }
         setTimeout(function(){
             for (let i = 0; i < turned.length; i++){
                 turned[i].classList.remove('selecionada')
             }
         }, 1000);    
     }
+
+    correct = document.querySelectorAll('.correta');
+    if (correct.length === numberOfCards){
+        setTimeout(function(){
+            endOfGame()
+        }, 300)
+    }
 }
 
-const numberOfCards = chooseGame();
-assembleGame(numberOfCards);
+function endOfGame(){
+    alert(`Você ganhou o jogo em ${move} jogadas!`);
+    const playAgain = prompt('Deseja jogar novamente (s/n)?')
+    if (playAgain === 's'){ 
+        let game = document.querySelector('ul');
+        game.innerHTML = '';
+        playGame();
+    }
+}
+
+function playGame(){
+    numberOfCards = chooseGame();
+    assembleGame(numberOfCards);
+}
+
+playGame()

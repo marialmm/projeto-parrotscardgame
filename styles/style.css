@@ -64,11 +64,11 @@ ul{
     transform: rotateY(180deg);
 }
 
-.selecionada .front{
+.selecionada .front, .correta .front{
     transform: rotateY(0deg);
 }
 
-.selecionada .back{
+.selecionada .back, .correta .back{
     transform: rotateY(180deg);
 }
 
