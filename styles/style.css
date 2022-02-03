@@ -39,7 +39,7 @@ ul{
     align-items: center;
 }
 
-li{
+.card{
     width: 117px;
     height: 146px;
     background-color: #A7E9AF;
@@ -49,9 +49,30 @@ li{
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
-li img{
+.card div{
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+.card .front{
+    transform: rotateY(180deg);
+}
+
+.selecionada .front{
+    transform: rotateY(0deg);
+}
+
+.selecionada .back{
+    transform: rotateY(180deg);
+}
+
+.card img{
     width: 100px;
 }
 
