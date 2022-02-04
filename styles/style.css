@@ -52,9 +52,6 @@ ul{
 .card{
     width: 117px;
     height: 146px;
-    background-color: #A7E9AF;
-    border: 1px solid #99CEA8;
-    border-radius: 5px;
     margin: 34px;
     display: flex;
     justify-content: center;
@@ -65,7 +62,10 @@ ul{
 .card div{
     width: 117px;
     height: 146px;
-    backface-visibility: hidden;
+    background-color: #A7E9AF;
+    border: 1px solid #99CEA8;
+    border-radius: 5px;
+    -webkit-backface-visibility: hidden;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -78,6 +78,9 @@ function endOfGame(){
     clearInterval(interval);
     alert(`Você ganhou o jogo em ${move} jogadas e ${segundo} segundos!`);
     const playAgain = prompt('Deseja jogar novamente (s/n)?')
+    while (playAgain !== 's' || playAgain !== 'n'){
+        playAgain = prompt('Resposta inválida! Deseja jogar novamente (s/n)?')
+    }
     if (playAgain === 's'){ 
         let game = document.querySelector('ul');
         game.innerHTML = '';
