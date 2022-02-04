@@ -4,6 +4,14 @@ parrots.sort(comparador);
 
 let move = 0;
 let numberOfCards = 0;
+let segundo = parseInt(document.querySelector('.contador').innerHTML);
+let interval = null;
+
+function contador() {
+    segundo += 1;
+    let timer = document.querySelector('.contador');
+    timer.innerHTML = segundo;
+}
 
 function comparador() { 
 	return Math.random() - 0.5; 
@@ -28,16 +36,17 @@ function assembleGame(numberOfCards){
     let game = document.querySelector('ul');
     for (let i = 0; i < numberOfCards; i++){
         game.innerHTML = game.innerHTML + `
-        <li onclick = "turnCard(this)" class="card">
-            <div class = "back">
+        <li onclick = "turnCard(this)" class="card" data-identifier="card">
+            <div class = "back" data-identifier="back-face">
                 <img src="midias/front.png" alt="Papagaio">
             </div>
-            <div class = "front">
+            <div class = "front" data-identifier="front-face">
                 <img src="midias/${cards[i]}.gif" alt="${cards[i]}">
             </div>
         </li>
         `
     }
+    interval = setInterval(contador, 1000);
 
 }
 
@@ -51,23 +60,23 @@ function turnCard(card){
                 turned[i].classList.add('correta');
             }
         }
-        setTimeout(function(){
-            for (let i = 0; i < turned.length; i++){
+        setTimeout(
+            `for (let i = 0; i < turned.length; i++){
                 turned[i].classList.remove('selecionada')
-            }
-        }, 1000);    
+            }`
+        , 1000);    
     }
 
     correct = document.querySelectorAll('.correta');
     if (correct.length === numberOfCards){
-        setTimeout(function(){
-            endOfGame()
-        }, 300)
+        setTimeout(endOfGame, 300)
     }
 }
 
+
 function endOfGame(){
-    alert(`Você ganhou o jogo em ${move} jogadas!`);
+    clearInterval(interval);
+    alert(`Você ganhou o jogo em ${move} jogadas e ${segundo} segundos!`);
     const playAgain = prompt('Deseja jogar novamente (s/n)?')
     if (playAgain === 's'){ 
         let game = document.querySelector('ul');
@@ -77,6 +86,7 @@ function endOfGame(){
 }
 
 function playGame(){
+    move = 0;
     numberOfCards = chooseGame();
     assembleGame(numberOfCards);
 }
