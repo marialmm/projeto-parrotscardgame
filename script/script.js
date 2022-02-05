@@ -8,6 +8,7 @@ let second = parseInt(document.querySelector('.counter').innerHTML);
 let timer = document.querySelector('.counter');
 let interval = null;
 let lock = false;
+let turned = null;
 
 function counter() {
     second += 1;
@@ -55,36 +56,33 @@ function assembleGame(numberOfCards){
 }
 
 function turnCard(card){
-    if (lock === false && card.classList.contains('selected') === false){
+    if (!lock && !card.classList.contains('selected')){
         card.classList.add('selected');
         move += 1;
-    }
-    turned = document.querySelectorAll('.selected');
-    console.log(`move = ${move}`);
-    console.log(`viradas = ${turned.length}`)
-    if (turned.length === 2){
-        lock = true;
-        if(turned[0].innerHTML === turned[1].innerHTML){
-            for (let i = 0; i < turned.length; i++){
-                turned[i].classList.add('correct');   
+        
+        turned = document.querySelectorAll('.selected');
+        
+        if (turned.length === 2){
+            lock = true;
+            if(turned[0].innerHTML === turned[1].innerHTML){
+                for (let i = 0; i < turned.length; i++){
+                    turned[i].classList.add('correct');   
+                }
             }
+            setTimeout(
+                `for (let i = 0; i < turned.length; i++){
+                    turned[i].classList.remove('selected');
+                }
+                lock = false;`
+            , 1000);   
         }
-        setTimeout(
-            `for (let i = 0; i < turned.length; i++){
-                turned[i].classList.remove('selected');
-                console.log(i);
-            }
-            console.log('end')
-            lock = false;
-            console.log(lock);
-            ;`
-        , 1000);   
+        
+        correct = document.querySelectorAll('.correct');
+        if (correct.length === numberOfCards){
+            setTimeout(endOfGame, 300)
+        }
     }
 
-    correct = document.querySelectorAll('.correct');
-    if (correct.length === numberOfCards){
-        setTimeout(endOfGame, 300)
-    }
 }
 
 
