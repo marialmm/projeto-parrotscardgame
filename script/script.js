@@ -1,19 +1,21 @@
 let parrots = ['bobrossparrot', 'explodyparrot', 'fiestaparrot', 'metalparrot', 'revertitparrot', 'tripletsparrot', 'unicornparrot'];
 
-parrots.sort(comparador);
+parrots.sort(comparator);
 
 let move = 0;
 let numberOfCards = 0;
-let segundo = parseInt(document.querySelector('.contador').innerHTML);
+let second = parseInt(document.querySelector('.counter').innerHTML);
+let timer = document.querySelector('.counter');
 let interval = null;
+let lock = false;
 
-function contador() {
-    segundo += 1;
-    let timer = document.querySelector('.contador');
-    timer.innerHTML = segundo;
+function counter() {
+    second += 1;
+    
+    timer.innerHTML = second;
 }
 
-function comparador() { 
+function comparator() { 
 	return Math.random() - 0.5; 
 }
 
@@ -32,7 +34,7 @@ function assembleGame(numberOfCards){
         cards[2 * i + 1] = parrots[i];
     }
 
-    cards.sort(comparador);
+    cards.sort(comparator);
     let game = document.querySelector('ul');
     for (let i = 0; i < numberOfCards; i++){
         game.innerHTML = game.innerHTML + `
@@ -46,28 +48,40 @@ function assembleGame(numberOfCards){
         </li>
         `
     }
-    interval = setInterval(contador, 1000);
+    timer.innerHTML = 0;
+    second = 0;
+    interval = setInterval(counter, 1000);
 
 }
 
 function turnCard(card){
-    card.classList.add('selecionada');
-    turned = document.querySelectorAll('.selecionada');
-    move += 1;
-    if (turned.length > 1){
+    if (lock === false && card.classList.contains('selected') === false){
+        card.classList.add('selected');
+        move += 1;
+    }
+    turned = document.querySelectorAll('.selected');
+    console.log(`move = ${move}`);
+    console.log(`viradas = ${turned.length}`)
+    if (turned.length === 2){
+        lock = true;
         if(turned[0].innerHTML === turned[1].innerHTML){
             for (let i = 0; i < turned.length; i++){
-                turned[i].classList.add('correta');
+                turned[i].classList.add('correct');   
             }
         }
         setTimeout(
             `for (let i = 0; i < turned.length; i++){
-                turned[i].classList.remove('selecionada')
-            }`
-        , 1000);    
+                turned[i].classList.remove('selected');
+                console.log(i);
+            }
+            console.log('end')
+            lock = false;
+            console.log(lock);
+            ;`
+        , 1000);   
     }
 
-    correct = document.querySelectorAll('.correta');
+    correct = document.querySelectorAll('.correct');
     if (correct.length === numberOfCards){
         setTimeout(endOfGame, 300)
     }
@@ -76,9 +90,9 @@ function turnCard(card){
 
 function endOfGame(){
     clearInterval(interval);
-    alert(`Você ganhou o jogo em ${move} jogadas e ${segundo} segundos!`);
-    const playAgain = prompt('Deseja jogar novamente (s/n)?')
-    while (playAgain !== 's' || playAgain !== 'n'){
+    alert(`Você ganhou o jogo em ${move} jogadas e ${second} segundos!`);
+    let playAgain = prompt('Deseja jogar novamente (s/n)?')
+    while (playAgain !== 's' && playAgain !== 'n'){
         playAgain = prompt('Resposta inválida! Deseja jogar novamente (s/n)?')
     }
     if (playAgain === 's'){ 

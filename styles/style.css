@@ -33,7 +33,7 @@ h1{
     position: relative;
 }
 
-.contador{
+.counter{
     position: absolute;
     top: -15px;
     right: 50px;
@@ -78,11 +78,11 @@ ul{
     transform: rotateY(180deg);
 }
 
-.selecionada .front, .correta .front{
+.selected .front, .correct .front{
     transform: rotateY(0deg);
 }
 
-.selecionada .back, .correta .back{
+.selected .back, .correct .back{
     transform: rotateY(180deg);
 }
 
