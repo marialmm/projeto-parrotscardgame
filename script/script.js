@@ -89,11 +89,11 @@ function turnCard(card){
 function endOfGame(){
     clearInterval(interval);
     alert(`Você ganhou o jogo em ${move} jogadas e ${second} segundos!`);
-    let playAgain = prompt('Deseja jogar novamente (s/n)?')
-    while (playAgain !== 's' && playAgain !== 'n'){
-        playAgain = prompt('Resposta inválida! Deseja jogar novamente (s/n)?')
+    let playAgain = prompt('Deseja jogar novamente (sim/não)?')
+    while (playAgain.toUpperCase() !== 'SIM' && playAgain.toUpperCase() !== 'NÃO'){
+        playAgain = prompt('Resposta inválida! Deseja jogar novamente (sim/não)?')
     }
-    if (playAgain === 's'){ 
+    if (playAgain.toUpperCase() === 'SIM'){ 
         let game = document.querySelector('ul');
         game.innerHTML = '';
         playGame();
