@@ -9,6 +9,7 @@ let timer = document.querySelector('.counter');
 let interval = null;
 let lock = false;
 let turned = null;
+let end = false;
 
 function counter() {
     second += 1;
@@ -56,9 +57,11 @@ function assembleGame(numberOfCards){
 }
 
 function turnCard(card){
-    if (!lock && !card.classList.contains('selected')){
+    if (!lock && !card.classList.contains('selected') && !end){
+        if (!card.classList.contains('correct')){
         card.classList.add('selected');
         move += 1;
+        }
         
         turned = document.querySelectorAll('.selected');
         
@@ -79,7 +82,8 @@ function turnCard(card){
         
         correct = document.querySelectorAll('.correct');
         if (correct.length === numberOfCards){
-            setTimeout(endOfGame, 300)
+            setTimeout(endOfGame, 300);
+            end = true;
         }
     }
 
@@ -102,6 +106,7 @@ function endOfGame(){
 
 function playGame(){
     move = 0;
+    end = false;
     numberOfCards = chooseGame();
     assembleGame(numberOfCards);
 }
